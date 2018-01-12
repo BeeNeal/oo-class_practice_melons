@@ -19,12 +19,12 @@ class MelonType(object):
         self.pairings = []
 
 
-    def add_pairing(self, pairing):
+    def add_pairing(self, pairings):
         """Add a food pairing to the instance's pairings list."""
 
         # you can extend with a tuple! passing a tuple as the single argument
         # 'extends' the list
-        self.pairings.extend(pairing)
+        self.pairings.extend(pairings)
 
 
     def update_code(self, new_code):
@@ -35,22 +35,26 @@ class MelonType(object):
 
 def make_melon_types():
     """Returns a list of current melon types."""
+    # still a bit of a mess here
+    all_melon_types = []
 
-    # all_melon_types = []
+    m = MelonType('musk', 1998, 'green', True, True, 'Muskmelon')
+    m.add_pairing(['mint'])
+    all_melon_types.append(m)
 
-    musk = MelonType('musk', 1998, 'green', True, True, 'Muskmelon')
-    musk.add_pairing(['mint'])
+    m = MelonType('cas', 2003, 'orange', False, False, 'Casaba')
+    m.add_pairing(['stawberries', 'mint'])
+    all_melon_types.append(m)
 
-    cas = MelonType('cas', 2003, 'orange', False, False, 'Casaba')
-    cas.add_pairing(['stawberries', 'mint'])
+    m = MelonType('cren', 1996, 'green', False, False, "Crenshaw")
+    m.add_pairing(["proscuitto"])
+    all_melon_types.append(m)
 
-    cren = MelonType('cren', 1996, 'green', False, False, "Crenshaw")
-    cren.add_pairing(["proscuitto"])
+    m = MelonType('yw', 2013, 'yellow', False, True, "Yellow Watermelon")
+    m.add_pairing(['ice cream'])
+    all_melon_types.append(m)
 
-    yw = MelonType('yw', 2013, 'yellow', False, True, "Yellow Watermelon")
-    yw.add_pairing(['ice cream'])
-
-    all_melon_types = [musk, cas, cren, yw]
+    # all_melon_types = [melon1, m2, m3, m4]
 
     return all_melon_types
 
@@ -91,28 +95,38 @@ class Melon(object):
         self.color_rating = color_rating
         self.field = field
         self.harvester = harvester
-        # self.is_sellable = None
-        self.is_sellable = is_sellable(self)
+        #self.is_sellable = None
+        self.is_sellable = self.is_sellable_x()
 
-
-    def is_sellable(self):
+    def is_sellable_x(self):
         """This logic might change over time. Currently, a melon is able to be sold
         if both its shape and color ratings are greater than 5, and it didn’t
         come from field 3, which was found to have poisonous fertilizer planted
         by a competing melon farm."""
 
         if self.shape_rating > 5 and self.color_rating > 5 and self.field != 3:
-            sell_this_melon = True
+            self.is_sellable = True
         else:
-            sell_this_melon = False
+            self.is_sellable = False
 
-        return self_this_melon
+        return self.is_sellable
 
 
 def make_melons(melon_types):
     """Returns a list of Melon objects."""
+    # kind of a mess
+    melon_1 = Melon(1, 'yw', 8, 7, 2, "Sheila")
+    melon_2 = Melon(2, 'yw', 3, 4, 2, "Sheila")
+    melon_3 = Melon(3, 'yw', 9, 8, 3, "Sheila")
+    melon_4 = Melon(4, 'cas', 10, 6, 35, "Sheila")
+    melon_5 = Melon(5, 'cren', 8, 9, 35, "Michael")
+    melon_6 = Melon(6, 'cren', 8, 2, 35, "Michael")
+    melon_7 = Melon(7, 'cren', 2, 3, 4, "Michael")
+    melon_8 = Melon(8, 'musk', 6, 7, 4, "Michael")
+    melon_9 = Melon(9, 'yw', 7, 10, 3, "Sheila")
 
-    # Fill in the rest
+    melons = [melon_1, melon_2, melon_3, melon_4, melon_5, melon_6, melon_7,
+              melon_8, melon_9]
 
 def get_sellability_report(melons):
     """Given a list of melon object, prints whether each one is sellable."""
